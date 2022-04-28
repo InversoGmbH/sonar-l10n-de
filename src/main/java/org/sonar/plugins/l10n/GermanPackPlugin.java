@@ -19,14 +19,18 @@
  */
 package org.sonar.plugins.l10n;
 
-import org.sonar.api.SonarPlugin;
-
 import java.util.Collections;
-import java.util.List;
 
-public final class GermanPackPlugin extends SonarPlugin {
+import org.sonar.api.Plugin;
 
-  public List getExtensions() {
-    return Collections.emptyList();
+public final class GermanPackPlugin implements Plugin {
+  @Override
+  public void define(Context context) {
+    context.addExtensions(Collections.emptyList());
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName();
   }
 }

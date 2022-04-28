@@ -19,16 +19,33 @@
  */
 package org.sonar.plugins.l10n;
 
-import org.junit.Test;
-import org.sonar.test.i18n.I18nMatchers;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
-import static org.fest.assertions.Assertions.assertThat;
+import org.junit.Test;
+import org.sonar.api.Plugin;
+import org.sonar.api.SonarEdition;
+import org.sonar.api.SonarQubeSide;
+import org.sonar.api.SonarRuntime;
+import org.sonar.api.internal.PluginContextImpl;
+import org.sonar.api.internal.SonarRuntimeImpl;
+import org.sonar.api.utils.Version;
+import org.sonar.test.i18n.I18nMatchers;
 
 public class GermanPackPluginTest {
 
   @Test
   public void noExtensions() throws Exception {
-    assertThat(new GermanPackPlugin().getExtensions()).isEmpty();
+    GermanPackPlugin plugin = new GermanPackPlugin();
+
+    String pluginName = plugin.toString();
+    assertEquals("GermanPackPlugin", pluginName);
+
+    SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(Version.create(9, 4),
+        SonarQubeSide.SCANNER, SonarEdition.COMMUNITY);
+    Plugin.Context context = new PluginContextImpl.Builder().setSonarRuntime(runtime).build();
+    plugin.define(context);
+    assertThat(context.getExtensions()).isEmpty();
   }
 
   @Test
